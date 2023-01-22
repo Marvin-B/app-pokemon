@@ -17,10 +17,11 @@ const PokemonImage = ({ pokemonName }) => {
 
     return (
         <Image
-            source={{ uri: pokemonImageUrl }}
-            style={image.image}
+           source={pokemonImageUrl ? {uri: pokemonImageUrl} : require('../assets/pokeball.png')}
+           style={image.image}
         />
-    );
+     );
+     
 };
 
 export default PokemonImage;

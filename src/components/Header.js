@@ -1,3 +1,5 @@
+// Je n'utilise finalement pas ce composant, mais je le laisse néanmoins.
+
 import React from "react";
 import { View, Text, StyleSheet, Image} from 'react-native';
 

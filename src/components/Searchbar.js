@@ -32,14 +32,13 @@ const searchbar = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         paddingLeft: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: 'grey',
+        borderBottomWidth: 10,
+        borderBottomColor: '#545356',
         paddingBottom: 10,
-        marginBottom: 10,
         backgroundColor : 'white',
     },
     icon: {
-        color: 'red',
+        color: '#FF3838',
         fontSize:24,
     },
     input: {

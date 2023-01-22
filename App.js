@@ -1,19 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import Header from './src/components/Header';
-import Searchbar from './src/components/Searchbar';
+import * as React from 'react';
+import { View } from 'react-native';
 import PokemonsList from './src/components/PokemonsList';
+import { NavigationContainer } from '@react-navigation/native';
+import Navigation from './src/components/Navigation';
 
 const App = () => {
     return (
-        <View style={{backgroundColor:"white"}}>
-          <Header />
-          <Searchbar />
-          <PokemonsList />
-        </View>
+      <NavigationContainer>
+        <Navigation>
+          <View style={{backgroundColor: "white"}}>
+            <PokemonsList />
+          </View>
+        </Navigation>
+      </NavigationContainer>
     );
 };
 
 export default App;
-

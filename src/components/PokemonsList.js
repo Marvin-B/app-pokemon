@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import PokemonImage from './PokemonImage.js';
+import Searchbar from './Searchbar';
+
 import { useNavigation } from '@react-navigation/native';
 
 
 const PokemonsList = () => {
+    const navigation = useNavigation();
     const [pokemons, setPokemons] = useState([]);
     const [offset, setOffset] = useState(0);
     const [loading, setLoading] = useState(false);
-
     const fetchPokemons = async () => {
         setLoading(true);
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=20`);
@@ -21,20 +23,29 @@ const PokemonsList = () => {
         fetchPokemons();
     }, [offset]);
 
+
+    const handlePress = (pokemon) => {
+        navigation.navigate('PokemonDetails', { pokemon });
+    }
+    
     const handleLoadMore = () => {
         setOffset(offset + 20);
     };
 
     return (
         <View>
+            <Searchbar />
             <FlatList
                 data={pokemons}
                 keyExtractor={item => item.url.split('/')[6]}
                 renderItem={({ item }) => (
-                    <View style={liste.global}>
-                        <PokemonImage pokemonName={item.name} />
-                        <Text style={liste.texte}>{item.name}</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => handlePress(item)}>
+                        <View style={liste.global}>
+                            <PokemonImage pokemonName={item.name} />
+                            <Text style={liste.texte}>{item.name}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    
                 )}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.5}
@@ -58,6 +69,7 @@ const liste = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         borderBottomWidth: 1,
+        borderBottomColor: '#545356',
     },
     texte: {
         fontSize:30,

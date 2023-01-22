@@ -1,25 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import axios from 'axios';
+import { View, Text, StyleSheet } from 'react-native';
 
 const PokemonDescription = ({ pokemon }) => {
-    const [pokemonDescription, setPokemonDescription] = useState('');
+    const [description, setDescription] = useState('');
 
     useEffect(() => {
-        const fetchPokemonDescription = async () => {
-            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon}`);
-            const flavorTextEntries = response.data.flavor_text_entries;
-            const englishDescription = flavorTextEntries.find(entry => entry.language.name === 'en');
-            setPokemonDescription(englishDescription.flavor_text);
+        const fetchDescription = async () => {
+            if (pokemon && pokemon.flavor_text_entries) {
+                const frenchDescription = pokemon.flavor_text_entries.find(
+                  entry => entry.language.name === 'fr'
+                );
+                if (frenchDescription) {
+                    setDescription(frenchDescription.flavor_text);
+                }
+            }
         }
-        fetchPokemonDescription();
+        fetchDescription();
     }, [pokemon]);
 
     return (
         <View>
-            <Text>{pokemonDescription}</Text>
+            <Text styles={styles.element}>{description}</Text>
         </View>
     );
 };
 
 export default PokemonDescription;
+
+const styles = StyleSheet.create({
+    element: {
+        textAlign:"justify",
+        fontSize:20,
+        fontFamily:"Roboto"
+    },
+});

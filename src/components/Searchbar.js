@@ -1,26 +1,30 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, Text } from 'react-native';
 import { MaterialIcons } from 'react-native-vector-icons';
+import { View, TextInput, StyleSheet} from 'react-native';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const SearchBar = () => {
-  const [searchText, setSearchText] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+    const [pokemon, setPokemon] = useState({});
+    const navigation = useNavigation();
 
-  const handleSearch = () => {
-    console.log(`Recherche de ${searchText}`);
-    // Your code to handle the search here
-  }
+    const handleSearch = async () => {
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${searchTerm.toLowerCase()}`);
+        setPokemon(response.data);
+        navigation.navigate('PokemonDetails', {pokemon});
+    };
 
   return (
     <View style={searchbar.global}>
-      <TextInput style={searchbar.input}
-        placeholder="Rechercher un Pokemon"
-        value={searchText}
-        onChangeText={text => setSearchText(text)}
-      />
-      <TouchableOpacity onPress={handleSearch}>
-      <MaterialIcons name="search" style={searchbar.icon} />
-      </TouchableOpacity>
-    </View>
+      <TextInput
+                style={searchbar.input}
+                onChangeText={setSearchTerm}
+                value={searchTerm}
+                placeholder="Entrez le nom d'un Pokemon"
+            />
+            <MaterialIcons name="search" style={searchbar.icon} onPress={handleSearch}/>
+        </View>
   );
 };
 
@@ -28,7 +32,6 @@ export default SearchBar;
 
 const searchbar = StyleSheet.create({
     global: {
-        marginTop:10,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         paddingLeft: 10,

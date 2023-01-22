@@ -7,26 +7,28 @@ import PokemonName from './PokemonName';
 import PokemonDescription from './PokemonDescription';
 import PokemonImage from './PokemonImage';
 
-const PokemonDetails = ({ pokemon }) => {
+const PokemonDetails = ({ route }) => {
     const [pokemon, setPokemon] = useState({});
 
     useEffect(() => {
         const fetchPokemon = async () => {
-            const response = await axios.get(route.params.url);
+            const response = await axios.get(route.params.pokemon.url);
             setPokemon(response.data);
         }
         fetchPokemon();
-    }, [pokemon.url]);
+    }, [route.params.pokemon]);
 
     return (
         <View>
-            <PokemonImage pokemon={pokemon} />
-            <Text>Nom : </Text><PokemonName pokemon={pokemon} />
-            <Text>Poids : </Text><PokemonWeight pokemon={pokemon} />
-            <Text>Type(s) : </Text><PokemonTypes pokemon={pokemon} />
+            <PokemonImage pokemon={pokemon}/>
+            <PokemonName pokemon={pokemon} />
+            <PokemonTypes pokemon={pokemon} />
+            <PokemonWeight pokemon={pokemon} />
             <Text>Description : </Text><PokemonDescription pokemon={pokemon} />
         </View>
     );
 };
 
 export default PokemonDetails;
+
+

@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import axios from 'axios';
+import { View, Text, StyleSheet } from 'react-native';
 
-const PokemonName = ({ pokemonName }) => {
-    const [pokemon, setPokemon] = useState({});
-
-    useEffect(() => {
-        const fetchPokemon = async () => {
-            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-            setPokemon(response.data);
-        }
-        fetchPokemon();
-    }, [pokemonName]);
-
+const PokemonName = ({ pokemon }) => {
     return (
-        <View>
-            <Text>{pokemon.name}</Text>
-        </View>
+    <View>
+    <Text style={styles.element}>{pokemon.name}</Text>
+    </View>
     );
 };
+    
+    export default PokemonName;
 
-export default PokemonName;
+
+    const styles = StyleSheet.create({
+        element: {
+            textAlign:"center",
+            textTransform:"uppercase",
+            fontSize:30,
+            fontFamily:"Roboto"
+        },
+    });
+
+    

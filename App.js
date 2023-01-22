@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import PokemonsList from './src/components/PokemonsList';
+import PokemonDetails from './src/components/PokemonDetails';
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from './src/components/Navigation';
 

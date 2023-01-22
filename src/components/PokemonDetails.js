@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text} from 'react-native';
 import axios from 'axios';
+import PokemonWeight from './PokemonWeight';
+import PokemonTypes from './PokemonTypes';
+import PokemonName from './PokemonName';
+import PokemonDescription from './PokemonDescription';
+import PokemonImage from './PokemonImage';
 
-const PokemonDetails = ({ route }) => {
+const PokemonDetails = ({ pokemon }) => {
     const [pokemon, setPokemon] = useState({});
 
     useEffect(() => {
@@ -11,14 +16,15 @@ const PokemonDetails = ({ route }) => {
             setPokemon(response.data);
         }
         fetchPokemon();
-    }, [route.params.url]);
+    }, [pokemon.url]);
 
     return (
         <View>
-            <Text>{pokemon.name}</Text>
-            <Text>Type(s): {pokemon.types.map(type => type.type.name).join(', ')}</Text>
-            <Text>{pokemon.weight} kg</Text>
-            <Text>{pokemon.description}</Text>
+            <PokemonImage pokemon={pokemon} />
+            <Text>Nom : </Text><PokemonName pokemon={pokemon} />
+            <Text>Poids : </Text><PokemonWeight pokemon={pokemon} />
+            <Text>Type(s) : </Text><PokemonTypes pokemon={pokemon} />
+            <Text>Description : </Text><PokemonDescription pokemon={pokemon} />
         </View>
     );
 };
